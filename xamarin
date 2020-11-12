@@ -1,0 +1,67 @@
+using Android.App;
+using Android.OS;
+using Android.Support.V7.App;
+using Android.Runtime;
+using Android.Widget;
+
+namespace UpDown
+{
+    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
+    public class MainActivity : AppCompatActivity
+    {
+        Button btnUp, btnDown;
+        TextView tvNumber;
+        int number = 0;
+
+        protected override void OnCreate(Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);
+            Xamarin.Essentials.Platform.Init(this, savedInstanceState);
+            // Set our view from the "main" layout resource
+            SetContentView(Resource.Layout.activity_main);
+
+            btnDown = FindViewById<Button>(Resource.Id.btnDown);
+            //btnDown.Click += BtnDown_Click;
+            btnDown.Click += Btn_Click;
+
+            btnUp = FindViewById<Button>(Resource.Id.btnUp);
+            //btnUp.Click += BtnUp_Click;
+            btnUp.Click += Btn_Click;
+
+            tvNumber = FindViewById<TextView>(Resource.Id.tvNumber);
+
+        }
+
+
+        private void Btn_Click(object sender, System.EventArgs e)
+        {
+            Button btn = (Button)sender;
+            if (btn == btnUp)
+                number++;
+            else
+                number--;
+            tvNumber.Text = number.ToString();
+        }
+
+
+        private void BtnUp_Click(object sender, System.EventArgs e)
+        {
+            number++;
+            tvNumber.Text = number.ToString();
+        }
+
+        private void BtnDown_Click(object sender, System.EventArgs e)
+        {
+            number--;
+            tvNumber.Text = number.ToString();
+
+        }
+
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
+        {
+            Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+
+            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+}
